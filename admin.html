@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Sikkim Monastery Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="modal">
+        <div class="modal-content admin-login">
+            <div class="login-header">
+                <i class="fas fa-shield-alt"></i>
+                <h2>Admin Access</h2>
+                <p>Enter admin credentials to access booking management</p>
+            </div>
+            
+            <form id="adminLoginForm">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="adminUsername" placeholder="Admin Username" required>
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="adminPassword" placeholder="Admin Password" required>
+                </div>
+                
+                <button type="submit" class="admin-btn primary">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Login to Dashboard
+                </button>
+                
+                <div class="demo-credentials">
+                    <p><strong>Demo Credentials:</strong></p>
+                    <p>Username: <code>admin</code></p>
+                    <p>Password: <code>sikkim123</code></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="admin-container" style="display: none;">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="admin-nav">
+                <h1><i class="fas fa-monastery"></i> Sikkim Monastery Admin</h1>
+                <nav class="admin-menu">
+                    <button class="nav-btn active" data-tab="dashboard">
+                        <i class="fas fa-chart-line"></i> Dashboard
+                    </button>
+                    <button class="nav-btn" data-tab="bookings">
+                        <i class="fas fa-calendar-check"></i> Bookings
+                    </button>
+                    <button class="nav-btn" data-tab="analytics">
+                        <i class="fas fa-chart-pie"></i> Analytics
+                    </button>
+                    <button class="nav-btn logout" id="adminLogout">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Dashboard Overview -->
+        <div id="dashboardTab" class="admin-tab active">
+            <div class="admin-content">
+                <div class="dashboard-header">
+                    <h2>Dashboard Overview</h2>
+                    <div class="date-filter">
+                        <select id="dashboardDateFilter">
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month" selected>This Month</option>
+                            <option value="all">All Time</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 id="totalBookings">0</h3>
+                            <p>Total Bookings</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 id="totalGuests">0</h3>
+                            <p>Total Guests</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-rupee-sign"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 id="totalRevenue">₹0</h3>
+                            <p>Total Revenue</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 id="avgRating">0</h3>
+                            <p>Avg Rating</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Bookings -->
+                <div class="recent-bookings">
+                    <h3>Recent Bookings</h3>
+                    <div class="booking-list" id="recentBookingsList">
+                        <!-- Recent bookings will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bookings Management -->
+        <div id="bookingsTab" class="admin-tab">
+            <div class="admin-content">
+                <div class="bookings-header">
+                    <h2>Booking Management</h2>
+                    <div class="booking-controls">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="bookingSearch" placeholder="Search bookings...">
+                        </div>
+                        <div class="filter-controls">
+                            <select id="statusFilter">
+                                <option value="all">All Status</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="pending">Pending</option>
+                                <option value="cancelled">Cancelled</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                            <select id="monasteryFilter">
+                                <option value="all">All Monasteries</option>
+                            </select>
+                        </div>
+                        <button class="admin-btn primary" id="exportBookings">
+                            <i class="fas fa-download"></i> Export CSV
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bookings Table -->
+                <div class="bookings-table-container">
+                    <table class="bookings-table" id="bookingsTable">
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Guest Details</th>
+                                <th>Monastery</th>
+                                <th>Check-in</th>
+                                <th>Check-out</th>
+                                <th>Guests</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTableBody">
+                            <!-- Booking rows will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination" id="bookingsPagination">
+                    <!-- Pagination controls will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics -->
+        <div id="analyticsTab" class="admin-tab">
+            <div class="admin-content">
+                <h2>Analytics & Reports</h2>
+                
+                <div class="analytics-grid">
+                    <!-- Booking Trends Chart -->
+                    <div class="analytics-card">
+                        <h3>Booking Trends</h3>
+                        <canvas id="bookingTrendsChart"></canvas>
+                    </div>
+
+                    <!-- Popular Monasteries -->
+                    <div class="analytics-card">
+                        <h3>Popular Monasteries</h3>
+                        <div class="monastery-stats" id="monasteryStats">
+                            <!-- Monastery statistics will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Revenue Analysis -->
+                    <div class="analytics-card">
+                        <h3>Revenue Analysis</h3>
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+
+                    <!-- Guest Demographics -->
+                    <div class="analytics-card">
+                        <h3>Guest Demographics</h3>
+                        <div class="demographics-chart" id="demographicsChart">
+                            <!-- Demographics data will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Details Modal -->
+    <div id="bookingDetailsModal" class="modal">
+        <div class="modal-content booking-details">
+            <span class="close">&times;</span>
+            <div id="bookingDetailsContent">
+                <!-- Booking details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div id="adminNotification" class="admin-notification">
+        <div class="notification-content">
+            <i class="notification-icon"></i>
+            <span class="notification-message"></span>
+            <button class="notification-close">&times;</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/admin-auth.js"></script>
+    <script src="js/admin-dashboard.js"></script>
+    <script src="js/booking-manager.js"></script>
+</body>
+</html>

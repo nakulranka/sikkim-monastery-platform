@@ -1079,14 +1079,50 @@ function confirmBooking(accommodationId) {
     const guestPhone = document.getElementById('guestPhone').value;
     const checkin = document.getElementById('bookingCheckin').value;
     const checkout = document.getElementById('bookingCheckout').value;
+    const guests = parseInt(document.getElementById('bookingGuests').value);
 
     if (!guestName || !guestEmail || !guestPhone || !checkin || !checkout) {
         alert('Please fill in all required fields');
         return;
     }
 
-    // Simulate booking confirmation
-    alert(`Booking confirmed for ${guestName}!\n\nYou will receive a confirmation email shortly.`);
+    // Find the accommodation details
+    const accommodation = accommodationData.find(acc => acc.id === accommodationId);
+    if (!accommodation) {
+        alert('Accommodation not found');
+        return;
+    }
+
+    // Create booking data
+    const bookingData = {
+        guestName: guestName,
+        email: guestEmail,
+        phone: guestPhone,
+        monastery: accommodation.name,
+        checkIn: checkin,
+        checkOut: checkout,
+        guests: guests,
+        roomType: accommodation.price > 3000 ? 'Premium' : 'Base',
+        specialRequests: '',
+        paymentMethod: 'Online',
+        nationality: 'Not specified'
+    };
+
+    // Save to booking manager if available
+    if (window.bookingManager) {
+        const savedBooking = window.bookingManager.addBooking(bookingData);
+        
+        // Show success message with booking ID
+        alert(`Booking confirmed for ${guestName}!\n\nBooking ID: ${savedBooking.id}\nTotal Amount: ₹${savedBooking.amount}\n\nYou will receive a confirmation email shortly.`);
+        
+        // Trigger achievement if gamification is available
+        if (window.gamificationSystem) {
+            window.gamificationSystem.triggerAchievement('first-booking');
+        }
+    } else {
+        // Fallback if booking manager not loaded
+        alert(`Booking confirmed for ${guestName}!\n\nYou will receive a confirmation email shortly.`);
+    }
     
     // Close modal
     const modal = document.querySelector('.booking-modal');
