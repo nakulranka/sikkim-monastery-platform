@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sikkim Monasteries - Digital Heritage Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/gamification.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="assets/images/logo.png" alt="Sikkim Monasteries" class="logo-img">
+                <span class="logo-text">Sikkim Monasteries</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#monasteries" class="nav-link">Monasteries</a>
+                <a href="#virtual-tours" class="nav-link">360° Tours</a>
+                <a href="#festivals" class="nav-link">Festivals</a>
+                <a href="#plan-trip" class="nav-link">Plan Trip</a>
+                <a href="#eco-travel" class="nav-link">Eco Travel</a>
+                <a href="#book-stay" class="nav-link">Book Stay</a>
+            </div>
+            <div class="nav-actions">
+                <button class="language-selector" id="languageBtn">
+                    <i class="fas fa-globe"></i> English
+                </button>
+                <button class="chat-toggle" id="chatToggle">
+                    <i class="fas fa-comment"></i>
+                </button>
+            </div>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+            <video autoplay muted loop class="hero-video">
+                <source src="assets/images/sikkim-hero.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="title-main">Discover Sacred Sikkim</span>
+                    <span class="title-sub">Digital Heritage of Himalayan Monasteries</span>
+                </h1>
+                <p class="hero-description">
+                    Embark on an immersive journey through Sikkim's ancient monasteries. 
+                    Experience centuries-old Buddhist heritage through cutting-edge technology, 
+                    360° virtual tours, and AI-powered cultural guidance.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="startVirtualTour()">
+                        <i class="fas fa-vr-cardboard"></i>
+                        Start Virtual Tour
+                    </button>
+                    <button class="btn btn-secondary" onclick="exploreMap()">
+                        <i class="fas fa-map"></i>
+                        Explore Map
+                    </button>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Sacred Monasteries</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">360°</div>
+                    <div class="stat-label">Virtual Tours</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Annual Festivals</div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Featured Monasteries -->
+    <section id="monasteries" class="monasteries-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Sacred Monasteries</h2>
+                <p class="section-subtitle">Discover the spiritual heritage of Sikkim through our digitally preserved monasteries</p>
+            </div>
+            
+            <div class="monastery-grid">
+                <div class="monastery-card" data-monastery="rumtek">
+                    <div class="monastery-image">
+                        <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&h=600&fit=crop" alt="Rumtek Monastery">
+                        <div class="monastery-overlay">
+                            <div class="monastery-actions">
+                                <button class="tour-btn" onclick="start360Tour('rumtek')">
+                                    <i class="fas fa-vr-cardboard"></i>
+                                    360° Tour
+                                </button>
+                                <button class="info-btn" onclick="showMonasteryInfo('rumtek')">
+                                    <i class="fas fa-info-circle"></i>
+                                    Learn More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="monastery-content">
+                        <h3 class="monastery-name">Rumtek Monastery</h3>
+                        <p class="monastery-description">The largest monastery in Sikkim, known as the Dharma Chakra Centre</p>
+                        <div class="monastery-meta">
+                            <span class="location"><i class="fas fa-map-marker-alt"></i> Gangtok</span>
+                            <span class="founded"><i class="fas fa-calendar"></i> 1966</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="monastery-card" data-monastery="pemayangtse">
+                    <div class="monastery-image">
+                        <img src="https://images.unsplash.com/photo-1582719188393-bb71ca45dbb9?w=800&h=600&fit=crop" alt="Pemayangtse Monastery">
+                        <div class="monastery-overlay">
+                            <div class="monastery-actions">
+                                <button class="tour-btn" onclick="start360Tour('pemayangtse')">
+                                    <i class="fas fa-vr-cardboard"></i>
+                                    360° Tour
+                                </button>
+                                <button class="info-btn" onclick="showMonasteryInfo('pemayangtse')">
+                                    <i class="fas fa-info-circle"></i>
+                                    Learn More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="monastery-content">
+                        <h3 class="monastery-name">Pemayangtse Monastery</h3>
+                        <p class="monastery-description">One of the oldest monasteries with stunning Himalayan views</p>
+                        <div class="monastery-meta">
+                            <span class="location"><i class="fas fa-map-marker-alt"></i> Pelling</span>
+                            <span class="founded"><i class="fas fa-calendar"></i> 1705</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="monastery-card" data-monastery="tashiding">
+                    <div class="monastery-image">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop" alt="Tashiding Monastery">
+                        <div class="monastery-overlay">
+                            <div class="monastery-actions">
+                                <button class="tour-btn" onclick="start360Tour('tashiding')">
+                                    <i class="fas fa-vr-cardboard"></i>
+                                    360° Tour
+                                </button>
+                                <button class="info-btn" onclick="showMonasteryInfo('tashiding')">
+                                    <i class="fas fa-info-circle"></i>
+                                    Learn More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="monastery-content">
+                        <h3 class="monastery-name">Tashiding Monastery</h3>
+                        <p class="monastery-description">Sacred hilltop monastery with panoramic mountain views</p>
+                        <div class="monastery-meta">
+                            <span class="location"><i class="fas fa-map-marker-alt"></i> Yuksom</span>
+                            <span class="founded"><i class="fas fa-calendar"></i> 1641</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="monastery-card" data-monastery="enchey">
+                    <div class="monastery-image">
+                        <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&h=600&fit=crop" alt="Enchey Monastery">
+                        <div class="monastery-overlay">
+                            <div class="monastery-actions">
+                                <button class="tour-btn" onclick="start360Tour('enchey')">
+                                    <i class="fas fa-vr-cardboard"></i>
+                                    360° Tour
+                                </button>
+                                <button class="info-btn" onclick="showMonasteryInfo('enchey')">
+                                    <i class="fas fa-info-circle"></i>
+                                    Learn More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="monastery-content">
+                        <h3 class="monastery-name">Enchey Monastery</h3>
+                        <p class="monastery-description">Beautiful monastery dedicated to Guru Padmasambhava</p>
+                        <div class="monastery-meta">
+                            <span class="location"><i class="fas fa-map-marker-alt"></i> Gangtok</span>
+                            <span class="founded"><i class="fas fa-calendar"></i> 1909</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="view-all-monasteries">
+                <button class="btn btn-outline" onclick="viewAllMonasteries()">
+                    View All Monasteries <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Map Section -->
+    <section id="virtual-tours" class="map-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Interactive Monastery Map</h2>
+                <p class="section-subtitle">Explore monastery locations and plan your spiritual journey</p>
+            </div>
+            <div class="map-container">
+                <div id="monasteryMap" class="monastery-map"></div>
+                <div class="map-sidebar">
+                    <div class="map-controls">
+                        <h4>Filter Monasteries</h4>
+                        <div class="filter-options">
+                            <label class="filter-checkbox">
+                                <input type="checkbox" checked value="all">
+                                <span class="checkmark"></span>
+                                All Monasteries
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" checked value="nyingma">
+                                <span class="checkmark"></span>
+                                Nyingma Tradition
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" checked value="kagyu">
+                                <span class="checkmark"></span>
+                                Kagyu Tradition
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" checked value="gelug">
+                                <span class="checkmark"></span>
+                                Gelug Tradition
+                            </label>
+                        </div>
+                    </div>
+                    <div class="selected-monastery" id="selectedMonastery">
+                        <p>Click on a monastery marker to view details</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Festival Calendar -->
+    <section id="festivals" class="festival-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Festival Calendar</h2>
+                <p class="section-subtitle">Experience the vibrant spiritual celebrations throughout the year</p>
+            </div>
+            
+            <!-- Gamification Progress Display -->
+            <div id="gameProgress"></div>
+            
+            <div class="calendar-container">
+                <div class="calendar-navigation">
+                    <button class="calendar-nav-btn" id="prevMonth">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="current-month" id="currentMonth">
+                        January 2025
+                    </div>
+                    <button class="calendar-nav-btn" id="nextMonth">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Calendar will be generated dynamically -->
+                </div>
+                
+                <div class="upcoming-festivals">
+                    <h3>Upcoming Festivals</h3>
+                    <div class="festival-list" id="festivalList">
+                        <!-- Festival list will be populated dynamically -->
+                    </div>
+                </div>
+                
+                <!-- Daily Quests Panel -->
+                <div class="daily-quests-panel">
+                    <h3>Today's Spiritual Journey</h3>
+                    <div id="dailyQuestsList" class="daily-quests-list"></div>
+                </div>
+            </div>
+            
+            <!-- Achievements Panel -->
+            <div class="achievements-section">
+                <h3>Your Spiritual Achievements</h3>
+                <div id="achievementsGrid" class="achievements-grid"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trip Planning -->
+    <section id="plan-trip" class="trip-planning-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Plan Your Journey</h2>
+                <p class="section-subtitle">Let our AI-powered guide create the perfect Sikkim experience for you</p>
+            </div>
+            
+            <div class="trip-planner">
+                <div class="planner-form">
+                    <div class="form-group">
+                        <label for="travelDates">Travel Dates</label>
+                        <div class="date-inputs">
+                            <input type="date" id="startDate" name="startDate">
+                            <span>to</span>
+                            <input type="date" id="endDate" name="endDate">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="interests">Your Interests</label>
+                        <div class="interest-tags">
+                            <button class="interest-tag" data-interest="spiritual">Spiritual Journey</button>
+                            <button class="interest-tag" data-interest="photography">Photography</button>
+                            <button class="interest-tag" data-interest="trekking">Trekking</button>
+                            <button class="interest-tag" data-interest="cultural">Cultural Immersion</button>
+                            <button class="interest-tag" data-interest="meditation">Meditation</button>
+                            <button class="interest-tag" data-interest="festivals">Festivals</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="groupSize">Group Size</label>
+                        <select id="groupSize">
+                            <option value="1">Solo Traveler</option>
+                            <option value="2">Couple</option>
+                            <option value="3-5">Small Group (3-5)</option>
+                            <option value="6+">Large Group (6+)</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="generateTripPlan()">
+                        <i class="fas fa-magic"></i>
+                        Generate My Trip Plan
+                    </button>
+                </div>
+                
+                <div class="trip-results" id="tripResults" style="display: none;">
+                    <h3>Your Personalized Itinerary</h3>
+                    <div class="itinerary-content" id="itineraryContent">
+                        <!-- Dynamic itinerary will be generated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Eco-Friendly Travel -->
+    <section id="eco-travel" class="eco-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Sustainable Tourism</h2>
+                <p class="section-subtitle">Travel responsibly while preserving Sikkim's pristine environment</p>
+            </div>
+            
+            <div class="eco-content">
+                <div class="eco-cards">
+                    <div class="eco-card">
+                        <div class="eco-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h3>Carbon Neutral Travel</h3>
+                        <p>Calculate and offset your travel carbon footprint with our partner organizations</p>
+                        <button class="btn btn-eco" onclick="calculateCarbon()">Calculate Impact</button>
+                    </div>
+                    
+                    <div class="eco-card">
+                        <div class="eco-icon">
+                            <i class="fas fa-hotel"></i>
+                        </div>
+                        <h3>Eco-Friendly Stays</h3>
+                        <p>Book certified sustainable accommodations that support local communities</p>
+                        <button class="btn btn-eco" onclick="showEcoStays()">View Eco Stays</button>
+                    </div>
+                    
+                    <div class="eco-card">
+                        <div class="eco-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Community Tourism</h3>
+                        <p>Support local communities through authentic cultural experiences</p>
+                        <button class="btn btn-eco" onclick="exploreCommunity()">Explore Programs</button>
+                    </div>
+                    
+                    <div class="eco-card">
+                        <div class="eco-icon">
+                            <i class="fas fa-mountain"></i>
+                        </div>
+                        <h3>Conservation Efforts</h3>
+                        <p>Learn about and contribute to monastery and environmental preservation</p>
+                        <button class="btn btn-eco" onclick="learnConservation()">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="book-stay" class="booking-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Book Your Stay</h2>
+                <p class="section-subtitle">Find and book the perfect accommodation for your Sikkim journey</p>
+            </div>
+            
+            <div class="booking-container">
+                <div class="booking-filters">
+                    <div class="filter-group">
+                        <label>Location</label>
+                        <select id="locationFilter">
+                            <option value="">All Locations</option>
+                            <option value="gangtok">Gangtok</option>
+                            <option value="pelling">Pelling</option>
+                            <option value="yuksom">Yuksom</option>
+                            <option value="lachen">Lachen</option>
+                            <option value="lachung">Lachung</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Check-in</label>
+                        <input type="date" id="checkinDate">
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Check-out</label>
+                        <input type="date" id="checkoutDate">
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Guests</label>
+                        <select id="guestCount">
+                            <option value="1">1 Guest</option>
+                            <option value="2">2 Guests</option>
+                            <option value="3">3 Guests</option>
+                            <option value="4">4+ Guests</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="searchAccommodations()">
+                        <i class="fas fa-search"></i>
+                        Search
+                    </button>
+                </div>
+                
+                <div class="accommodation-results" id="accommodationResults">
+                    <!-- Accommodation cards will be populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 360 Tour Modal -->
+    <div class="tour-modal" id="tourModal">
+        <div class="tour-modal-content">
+            <button class="close-tour" onclick="closeTour()">&times;</button>
+            <div class="tour-viewer" id="tourViewer">
+                <a-scene embedded style="height: 100%; width: 100%;">
+                    <a-sky id="panorama" rotation="0 -130 0"></a-sky>
+                    <a-camera id="camera" wasd-controls="enabled: false">
+                        <a-cursor color="white"></a-cursor>
+                    </a-camera>
+                </a-scene>
+            </div>
+            <div class="tour-controls">
+                <button class="tour-control-btn" onclick="resetView()">
+                    <i class="fas fa-expand"></i> Reset View
+                </button>
+                <button class="tour-control-btn" onclick="toggleFullscreen()">
+                    <i class="fas fa-expand-arrows-alt"></i> Fullscreen
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot-container" id="chatbotContainer">
+        <div class="chatbot-header">
+            <div class="chatbot-title">
+                <i class="fas fa-robot"></i>
+                <span>Sikkim Guide AI</span>
+            </div>
+            <div class="chatbot-controls">
+                <select class="language-select" id="chatLanguage">
+                    <option value="en">English</option>
+                    <option value="hi">हिन्दी</option>
+                    <option value="ne">नेपाली</option>
+                    <option value="bo">བོད་སྐད་</option>
+                </select>
+                <button class="minimize-chat" onclick="toggleChat()">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="bot-message">
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">
+                    <p>Namaste! I'm your AI guide for Sikkim monasteries. I can help you with information about monasteries, festivals, travel planning, and more. How can I assist you today?</p>
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatInput" placeholder="Ask me anything about Sikkim monasteries...">
+            <button id="sendMessage" onclick="sendChatMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Language Selection Modal -->
+    <div class="language-modal" id="languageModal">
+        <div class="language-modal-content">
+            <h3>Select Language / भाषा चुनें</h3>
+            <div class="language-options">
+                <button class="language-option" onclick="setLanguage('en')">
+                    <span class="flag">🇬🇧</span>
+                    <span>English</span>
+                </button>
+                <button class="language-option" onclick="setLanguage('hi')">
+                    <span class="flag">🇮🇳</span>
+                    <span>हिन्दी</span>
+                </button>
+                <button class="language-option" onclick="setLanguage('ne')">
+                    <span class="flag">🇳🇵</span>
+                    <span>नेपाली</span>
+                </button>
+                <button class="language-option" onclick="setLanguage('bo')">
+                    <span class="flag">🏔️</span>
+                    <span>བོད་སྐད་</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Sikkim Monasteries</h4>
+                    <p>Preserving and sharing the spiritual heritage of Sikkim through digital innovation.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="#monasteries">Monasteries</a></li>
+                        <li><a href="#virtual-tours">Virtual Tours</a></li>
+                        <li><a href="#festivals">Festivals</a></li>
+                        <li><a href="#plan-trip">Trip Planning</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Travel</h4>
+                    <ul>
+                        <li><a href="#book-stay">Book Accommodation</a></li>
+                        <li><a href="#eco-travel">Eco Tourism</a></li>
+                        <li><a href="#">Travel Guide</a></li>
+                        <li><a href="#">Safety Information</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Sikkim Monasteries Digital Heritage Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/tour360.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/gamification.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/integration.js"></script>
+    <script src="js/booking.js"></script>
+</body>
+</html>
